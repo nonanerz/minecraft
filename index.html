@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="uk">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Міна Крафт</title>
+    <style>
+      body { margin: 0; overflow: hidden; font-family: monospace; user-select: none; }
+      
+      #crosshair {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 20px;
+        height: 20px;
+        background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"><path d="M10 0v20M0 10h20" stroke="white" stroke-width="2"/></svg>');
+        transform: translate(-50%, -50%);
+        pointer-events: none;
+        z-index: 10;
+        opacity: 0.8;
+      }
+      
+      #ui-layer {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+      }
+
+      #hotbar {
+        position: absolute;
+        bottom: 10px;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        background: rgba(0, 0, 0, 0.5);
+        padding: 5px;
+        border-radius: 5px;
+        gap: 5px;
+        pointer-events: auto;
+      }
+
+      .slot {
+        width: 40px;
+        height: 40px;
+        background: rgba(100, 100, 100, 0.5);
+        border: 2px solid #333;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: white;
+        font-weight: bold;
+        cursor: pointer;
+        position: relative;
+      }
+
+      .slot.active {
+        border-color: white;
+        transform: scale(1.1);
+      }
+
+      .slot span {
+        font-size: 10px;
+        position: absolute;
+        bottom: 2px;
+        right: 2px;
+      }
+      
+      .slot-icon {
+          width: 32px;
+          height: 32px;
+      }
+
+      #inventory-screen {
+          display: none;
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          background: #c6c6c6;
+          padding: 20px;
+          border: 4px solid #555;
+          pointer-events: auto;
+          text-align: center;
+          width: 400px;
+          height: 300px;
+      }
+      
+      #inventory-grid {
+          display: grid;
+          grid-template-columns: repeat(9, 1fr);
+          gap: 5px;
+          margin-top: 20px;
+      }
+      
+      .inv-slot {
+          width: 32px;
+          height: 32px;
+          background: #8b8b8b;
+          border: 2px solid #373737;
+      }
+
+      #instructions {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        color: white;
+        background: rgba(0, 0, 0, 0.5);
+        padding: 10px;
+        pointer-events: none;
+      }
+      
+      #health-hunger-container {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+        pointer-events: none;
+      }
+      
+      .status-bar {
+        display: flex;
+        gap: 2px;
+        background: rgba(0, 0, 0, 0.5);
+        padding: 5px;
+        border-radius: 5px;
+      }
+      
+      .heart, .food {
+        font-size: 20px;
+        line-height: 20px;
+      }
+      
+      #time-display {
+        position: absolute;
+        top: 10px;
+        left: 50%;
+        transform: translateX(-50%);
+        color: white;
+        background: rgba(0, 0, 0, 0.5);
+        padding: 8px 16px;
+        border-radius: 5px;
+        font-size: 16px;
+        font-weight: bold;
+        pointer-events: none;
+      }
+    </style>
+    <script type="module" crossorigin src="/minacraft/assets/index-D-_Q3QW7.js"></script>
+    <link rel="modulepreload" crossorigin href="/minacraft/assets/three-DJZeHXKL.js">
+    <link rel="modulepreload" crossorigin href="/minacraft/assets/cannon-DbeJiobQ.js">
+    <link rel="stylesheet" crossorigin href="/minacraft/assets/index-Ch8jeVHZ.css">
+  </head>
+  <body>
+    <div id="crosshair"></div>
+    
+    <div id="ui-layer">
+        <div id="instructions">
+            WASD: Рух | SHIFT: Біг | SPACE: Стрибок<br/>
+            ЛКМ: Видобуток / Атака | ПКМ: Поставити / Їсти 🍖 / Взаємодія<br/>
+            E: Інвентар | 1-9: Вибір | N: Ніч 🌙 | M: Спавн монстра 👾
+        </div>
+        
+        <!-- Health and Hunger -->
+        <div id="health-hunger-container">
+            <div id="health-bar" class="status-bar"></div>
+            <div id="hunger-bar" class="status-bar"></div>
+        </div>
+        
+        <!-- Time Display -->
+        <div id="time-display"></div>
+        
+        <div id="hotbar">
+            <!-- Generated via JS -->
+        </div>
+
+        <div id="inventory-screen">
+            <h3>Інвентар</h3>
+            <div style="display:flex; gap:8px; justify-content:center; margin: 6px 0 10px 0;">
+              <button id="save-game-btn">Save (F5)</button>
+              <button id="load-game-btn">Load (F9)</button>
+            </div>
+            <div id="inventory-hotbar"></div>
+            <div id="crafting-panel">
+                <div id="crafting-title">Крафт (2x2)</div>
+                <div class="crafting-grid">
+                    <div class="inv-slot crafting-slot" data-craft-index="0"></div>
+                    <div class="inv-slot crafting-slot" data-craft-index="1"></div>
+                    <div class="inv-slot crafting-slot" data-craft-index="2"></div>
+                    <div class="inv-slot crafting-slot" data-craft-index="3"></div>
+                </div>
+                <div id="crafting-output">
+                    <span id="crafting-result-label">Результат</span>
+                    <div id="crafting-result" class="inv-slot"></div>
+                </div>
+                <div id="crafting-result-name">Рецепт не знайдено</div>
+                <div class="crafting-hint">
+                    Клік по предмету в інвентарі - додати до крафту (по 1 шт.)<br>
+                    Клік по слоту крафту - повернути у інвентар<br>
+                    Shift+клік - перемістити стак у хотбар
+                </div>
+                <button id="recipe-guide-btn" class="guide-btn">📖 Гайд по рецептах</button>
+            </div>
+            <div id="inventory-grid">
+                <!-- Generated via JS -->
+            </div>
+        </div>
+
+        <!-- Recipe Guide Panel -->
+        <div id="recipe-guide-panel">
+            <div id="recipe-guide-header">
+                <h3>📖 Гайд по рецептах</h3>
+                <button id="recipe-guide-close">✕</button>
+            </div>
+            <div id="recipe-guide-content">
+                <!-- Generated via JS -->
+            </div>
+        </div>
+
+        <!-- Chest UI -->
+        <div id="chest-screen">
+            <h3>📦 Скриня</h3>
+            <div id="chest-inventory">
+                <!-- Generated via JS -->
+            </div>
+            <h4>Ваш інвентар</h4>
+            <div id="chest-player-inventory">
+                <!-- Generated via JS -->
+            </div>
+            <button id="chest-close" class="guide-btn">Закрити</button>
+        </div>
+    </div>
+
+  </body>
+</html>
