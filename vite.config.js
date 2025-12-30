@@ -2,7 +2,7 @@ import { defineConfig } from 'vite';
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  base: '/minacraft/', // Замініть на назву вашого репозиторію
+  base: '/minecraft/', // Назва репозиторію без "a"
   build: {
     outDir: 'dist',
     assetsDir: 'assets',
