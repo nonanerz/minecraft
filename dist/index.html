@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="uk">
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Minecraft Clone</title>
+    <title>Міна Крафт</title>
     <style>
       body { margin: 0; overflow: hidden; font-family: monospace; user-select: none; }
       
@@ -110,28 +110,79 @@
         padding: 10px;
         pointer-events: none;
       }
+      
+      #health-hunger-container {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+        pointer-events: none;
+      }
+      
+      .status-bar {
+        display: flex;
+        gap: 2px;
+        background: rgba(0, 0, 0, 0.5);
+        padding: 5px;
+        border-radius: 5px;
+      }
+      
+      .heart, .food {
+        font-size: 20px;
+        line-height: 20px;
+      }
+      
+      #time-display {
+        position: absolute;
+        top: 10px;
+        left: 50%;
+        transform: translateX(-50%);
+        color: white;
+        background: rgba(0, 0, 0, 0.5);
+        padding: 8px 16px;
+        border-radius: 5px;
+        font-size: 16px;
+        font-weight: bold;
+        pointer-events: none;
+      }
     </style>
-    <script type="module" crossorigin src="/assets/index-oYl8AlkR.js"></script>
-    <link rel="stylesheet" crossorigin href="/assets/index-UP3Zo8Dk.css">
+    <script type="module" crossorigin src="/assets/index-D3UkIQTx.js"></script>
+    <link rel="stylesheet" crossorigin href="/assets/index-Ch8jeVHZ.css">
   </head>
   <body>
     <div id="crosshair"></div>
     
     <div id="ui-layer">
         <div id="instructions">
-            WASD: Move | SHIFT: Sprint | SPACE: Jump<br/>
-            L-Click: Mine / Harvest animals | R-Click: Place<br/>
-            E: Inventory | 1-9: Select | Shift+Click: Move stacks to hotbar
+            WASD: Рух | SHIFT: Біг | SPACE: Стрибок<br/>
+            ЛКМ: Видобуток / Атака | ПКМ: Поставити / Їсти 🍖 / Взаємодія<br/>
+            E: Інвентар | 1-9: Вибір | N: Ніч 🌙 | M: Спавн монстра 👾
         </div>
+        
+        <!-- Health and Hunger -->
+        <div id="health-hunger-container">
+            <div id="health-bar" class="status-bar"></div>
+            <div id="hunger-bar" class="status-bar"></div>
+        </div>
+        
+        <!-- Time Display -->
+        <div id="time-display"></div>
         
         <div id="hotbar">
             <!-- Generated via JS -->
         </div>
 
         <div id="inventory-screen">
-            <h3>Inventory</h3>
+            <h3>Інвентар</h3>
+            <div style="display:flex; gap:8px; justify-content:center; margin: 6px 0 10px 0;">
+              <button id="save-game-btn">Save (F5)</button>
+              <button id="load-game-btn">Load (F9)</button>
+            </div>
+            <div id="inventory-hotbar"></div>
             <div id="crafting-panel">
-                <div id="crafting-title">Crafting (2x2)</div>
+                <div id="crafting-title">Крафт (2x2)</div>
                 <div class="crafting-grid">
                     <div class="inv-slot crafting-slot" data-craft-index="0"></div>
                     <div class="inv-slot crafting-slot" data-craft-index="1"></div>
@@ -139,15 +190,44 @@
                     <div class="inv-slot crafting-slot" data-craft-index="3"></div>
                 </div>
                 <div id="crafting-output">
-                    <span id="crafting-result-label">Result</span>
+                    <span id="crafting-result-label">Результат</span>
                     <div id="crafting-result" class="inv-slot"></div>
                 </div>
-                <div id="crafting-result-name">No recipe matched</div>
-                <div class="crafting-hint">Shift-click an inventory slot to send that stack to the hotbar or crafting grid.</div>
+                <div id="crafting-result-name">Рецепт не знайдено</div>
+                <div class="crafting-hint">
+                    Клік по предмету в інвентарі - додати до крафту (по 1 шт.)<br>
+                    Клік по слоту крафту - повернути у інвентар<br>
+                    Shift+клік - перемістити стак у хотбар
+                </div>
+                <button id="recipe-guide-btn" class="guide-btn">📖 Гайд по рецептах</button>
             </div>
             <div id="inventory-grid">
                 <!-- Generated via JS -->
             </div>
+        </div>
+
+        <!-- Recipe Guide Panel -->
+        <div id="recipe-guide-panel">
+            <div id="recipe-guide-header">
+                <h3>📖 Гайд по рецептах</h3>
+                <button id="recipe-guide-close">✕</button>
+            </div>
+            <div id="recipe-guide-content">
+                <!-- Generated via JS -->
+            </div>
+        </div>
+
+        <!-- Chest UI -->
+        <div id="chest-screen">
+            <h3>📦 Скриня</h3>
+            <div id="chest-inventory">
+                <!-- Generated via JS -->
+            </div>
+            <h4>Ваш інвентар</h4>
+            <div id="chest-player-inventory">
+                <!-- Generated via JS -->
+            </div>
+            <button id="chest-close" class="guide-btn">Закрити</button>
         </div>
     </div>
 

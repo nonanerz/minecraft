@@ -24,7 +24,6 @@ export class MonsterManager {
         restitution: 0
       })
     );
-  }
     
     this.monsterTypes = {
       zombie: {
