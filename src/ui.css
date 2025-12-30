@@ -1,0 +1,278 @@
+/* CSS Updates for Inventory UI */
+#inventory-screen {
+    background: #c6c6c6;
+    padding: 20px;
+    border: 4px solid #555;
+    width: 460px;
+    min-height: 420px;
+    display: none;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: auto;
+}
+
+#inventory-hotbar {
+    display: grid;
+    grid-template-columns: repeat(9, 40px);
+    gap: 6px;
+    justify-content: center;
+    margin: 10px 0 14px 0;
+}
+
+#save-game-btn, #load-game-btn {
+    padding: 6px 10px;
+    border: 2px solid #4e4e4e;
+    background: #e0e0e0;
+    cursor: pointer;
+    font-family: monospace;
+}
+
+#save-game-btn:hover, #load-game-btn:hover {
+    background: #f5f5f5;
+}
+
+#inventory-hotbar .inv-slot {
+    width: 40px;
+    height: 40px;
+    border: 2px solid #4e4e4e;
+    background: #8b8b8b;
+}
+
+.slot-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+.slot-content span {
+    position: absolute;
+    bottom: 2px;
+    right: 2px;
+    font-size: 12px;
+    color: white;
+    text-shadow: 1px 1px 0 #000;
+}
+
+.inv-slot {
+    cursor: pointer;
+}
+
+#crafting-panel {
+    background: #b5b5b5;
+    border: 2px solid #6e6e6e;
+    border-radius: 6px;
+    padding: 12px;
+    margin-bottom: 12px;
+    text-align: center;
+}
+
+.crafting-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 40px);
+    gap: 6px;
+    justify-content: center;
+    margin-top: 8px;
+}
+
+.crafting-slot {
+    width: 40px;
+    height: 40px;
+    border: 2px solid #4e4e4e;
+}
+
+#crafting-output {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+#crafting-result {
+    width: 44px;
+    height: 44px;
+}
+
+#crafting-result-name {
+    font-size: 0.9rem;
+    color: #1f1f1f;
+    margin-top: 4px;
+}
+
+.crafting-hint {
+    font-size: 11px;
+    color: #2a2a2a;
+    margin-top: 6px;
+}
+
+.guide-btn {
+    margin-top: 10px;
+    padding: 8px 16px;
+    background: #4caf50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.guide-btn:hover {
+    background: #45a049;
+}
+
+#recipe-guide-panel {
+    display: none;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #e0e0e0;
+    border: 4px solid #555;
+    border-radius: 8px;
+    width: 600px;
+    max-height: 80vh;
+    overflow-y: auto;
+    pointer-events: auto;
+    z-index: 1000;
+}
+
+#recipe-guide-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    background: #c6c6c6;
+    border-bottom: 2px solid #999;
+}
+
+#recipe-guide-header h3 {
+    margin: 0;
+    color: #1f1f1f;
+}
+
+#recipe-guide-close {
+    background: #f44336;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+#recipe-guide-close:hover {
+    background: #d32f2f;
+}
+
+#recipe-guide-content {
+    padding: 20px;
+}
+
+.recipe-category {
+    margin-bottom: 20px;
+}
+
+.recipe-category h4 {
+    color: #1f1f1f;
+    margin: 0 0 10px 0;
+    padding-bottom: 5px;
+    border-bottom: 2px solid #999;
+}
+
+.recipe-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px;
+    background: #b5b5b5;
+    border-radius: 4px;
+    margin-bottom: 8px;
+}
+
+.recipe-inputs {
+    display: flex;
+    gap: 5px;
+}
+
+.recipe-slot {
+    width: 32px;
+    height: 32px;
+    background: #8b8b8b;
+    border: 2px solid #4e4e4e;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.recipe-arrow {
+    font-size: 20px;
+    font-weight: bold;
+    color: #1f1f1f;
+}
+
+#chest-screen {
+    display: none;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #c6c6c6;
+    border: 4px solid #555;
+    border-radius: 8px;
+    padding: 20px;
+    width: 500px;
+    pointer-events: auto;
+    z-index: 1000;
+}
+
+#chest-screen h3 {
+    margin: 0 0 15px 0;
+    color: #1f1f1f;
+    text-align: center;
+}
+
+#chest-screen h4 {
+    margin: 20px 0 10px 0;
+    color: #1f1f1f;
+    font-size: 14px;
+}
+
+#chest-inventory {
+    display: grid;
+    grid-template-columns: repeat(9, 40px);
+    gap: 6px;
+    justify-content: center;
+    padding: 15px;
+    background: #b5b5b5;
+    border: 2px solid #6e6e6e;
+    border-radius: 6px;
+}
+
+#chest-player-inventory {
+    display: grid;
+    grid-template-columns: repeat(9, 40px);
+    gap: 6px;
+    justify-content: center;
+    margin-bottom: 15px;
+}
+
+#chest-inventory .inv-slot,
+#chest-player-inventory .inv-slot {
+    width: 40px;
+    height: 40px;
+}
+
+#chest-close {
+    width: 100%;
+    margin-top: 10px;
+}
+

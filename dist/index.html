@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Minecraft Clone</title>
+    <style>
+      body { margin: 0; overflow: hidden; font-family: monospace; user-select: none; }
+      
+      #crosshair {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 20px;
+        height: 20px;
+        background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"><path d="M10 0v20M0 10h20" stroke="white" stroke-width="2"/></svg>');
+        transform: translate(-50%, -50%);
+        pointer-events: none;
+        z-index: 10;
+        opacity: 0.8;
+      }
+      
+      #ui-layer {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+      }
+
+      #hotbar {
+        position: absolute;
+        bottom: 10px;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        background: rgba(0, 0, 0, 0.5);
+        padding: 5px;
+        border-radius: 5px;
+        gap: 5px;
+        pointer-events: auto;
+      }
+
+      .slot {
+        width: 40px;
+        height: 40px;
+        background: rgba(100, 100, 100, 0.5);
+        border: 2px solid #333;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: white;
+        font-weight: bold;
+        cursor: pointer;
+        position: relative;
+      }
+
+      .slot.active {
+        border-color: white;
+        transform: scale(1.1);
+      }
+
+      .slot span {
+        font-size: 10px;
+        position: absolute;
+        bottom: 2px;
+        right: 2px;
+      }
+      
+      .slot-icon {
+          width: 32px;
+          height: 32px;
+      }
+
+      #inventory-screen {
+          display: none;
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          background: #c6c6c6;
+          padding: 20px;
+          border: 4px solid #555;
+          pointer-events: auto;
+          text-align: center;
+          width: 400px;
+          height: 300px;
+      }
+      
+      #inventory-grid {
+          display: grid;
+          grid-template-columns: repeat(9, 1fr);
+          gap: 5px;
+          margin-top: 20px;
+      }
+      
+      .inv-slot {
+          width: 32px;
+          height: 32px;
+          background: #8b8b8b;
+          border: 2px solid #373737;
+      }
+
+      #instructions {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        color: white;
+        background: rgba(0, 0, 0, 0.5);
+        padding: 10px;
+        pointer-events: none;
+      }
+    </style>
+    <script type="module" crossorigin src="/assets/index-oYl8AlkR.js"></script>
+    <link rel="stylesheet" crossorigin href="/assets/index-UP3Zo8Dk.css">
+  </head>
+  <body>
+    <div id="crosshair"></div>
+    
+    <div id="ui-layer">
+        <div id="instructions">
+            WASD: Move | SHIFT: Sprint | SPACE: Jump<br/>
+            L-Click: Mine / Harvest animals | R-Click: Place<br/>
+            E: Inventory | 1-9: Select | Shift+Click: Move stacks to hotbar
+        </div>
+        
+        <div id="hotbar">
+            <!-- Generated via JS -->
+        </div>
+
+        <div id="inventory-screen">
+            <h3>Inventory</h3>
+            <div id="crafting-panel">
+                <div id="crafting-title">Crafting (2x2)</div>
+                <div class="crafting-grid">
+                    <div class="inv-slot crafting-slot" data-craft-index="0"></div>
+                    <div class="inv-slot crafting-slot" data-craft-index="1"></div>
+                    <div class="inv-slot crafting-slot" data-craft-index="2"></div>
+                    <div class="inv-slot crafting-slot" data-craft-index="3"></div>
+                </div>
+                <div id="crafting-output">
+                    <span id="crafting-result-label">Result</span>
+                    <div id="crafting-result" class="inv-slot"></div>
+                </div>
+                <div id="crafting-result-name">No recipe matched</div>
+                <div class="crafting-hint">Shift-click an inventory slot to send that stack to the hotbar or crafting grid.</div>
+            </div>
+            <div id="inventory-grid">
+                <!-- Generated via JS -->
+            </div>
+        </div>
+    </div>
+
+  </body>
+</html>
