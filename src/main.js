@@ -13,6 +13,7 @@ import { MonsterManager } from './MonsterManager.js';
 import { PlaceableObjectsManager } from './PlaceableObjects.js';
 import { SaveManager } from './SaveManager.js';
 import { createNoise2D, createNoise3D } from 'simplex-noise';
+import './ui.css'; // Import CSS for Vite to process
 
 // Setup Scene
 const scene = new THREE.Scene();
